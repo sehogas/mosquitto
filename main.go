@@ -8,7 +8,7 @@ import (
 )
 
 var messagePubHandler mqtt.MessageHandler = func(client mqtt.Client, msg mqtt.Message) {
-	fmt.Printf("Mensaje [%s] recibido en tópico [%s]\n", msg.Payload(), msg.Topic())
+	fmt.Printf("Recibido [%s] en tópico [%s]\n", msg.Payload(), msg.Topic())
 }
 var connectHandler mqtt.OnConnectHandler = func(client mqtt.Client) {
 	fmt.Println("Conectado!")
@@ -56,10 +56,10 @@ func main() {
 	token.Wait()
 	fmt.Printf("Suscripto a tópico [%s]\n", topic)
 
-	num := 10
+	num := 1000
 	for i := 0; i < num; i++ {
-		text := fmt.Sprintf("%d", i)
-		fmt.Printf("Publicando mensaje [%s] en tópico [%s]\n", text, topic)
+		text := fmt.Sprintf("mensaje %d", i)
+		fmt.Printf("Publicando [%s] en tópico [%s]\n", text, topic)
 		token = client.Publish(topic, 0, false, text)
 		token.Wait()
 		time.Sleep(time.Second)
